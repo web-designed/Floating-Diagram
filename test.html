@@ -78,29 +78,36 @@
     }
 
 
-    function connect(selectorStart, selectorEnd, diameter){
+    function connect(selectorStart, selectorEnd){
 
+      var diamStart = $(selectorStart).outerWidth();
+      var diamEnd = $(selectorEnd).outerWidth();
       var positionStart = $(selectorStart).offset();
-      var xStart = positionStart.left + diameter/2;
-      var yStart = positionStart.top + diameter/2;
+      var xStart = positionStart.left + diamStart/2;
+      var yStart = positionStart.top + diamStart/2;
       var positionEnd = $(selectorEnd).offset();
-      var xEnd = positionEnd.left + diameter/2;
-      var yEnd = positionEnd.top + diameter/2;
+      var xEnd = positionEnd.left + diamEnd/2;
+      var yEnd = positionEnd.top + diamEnd/2;
 
       // ---------------------------------------------------------
       //  If distance from circle needed 
       //  https://math.stackexchange.com/questions/175896/finding-a-point-along-a-line-a-certain-distance-away-from-another-point
       // ---------------------------------------------------------
         
-        var Dt = diameter/2 + 10; //new distance
-        var D  = Math.sqrt( (xEnd - xStart) * (xEnd - xStart) + (yEnd - yStart) * (yEnd - yStart) ); //distance btw. original points
-        var t  = Dt/D; //ratio
+        // First Point
+          var dt = diamStart/2 + 10; //new distance
+          var d  = Math.sqrt( (xEnd - xStart) * (xEnd - xStart) + (yEnd - yStart) * (yEnd - yStart) ); //distance btw. original points
+          var t  = dt/d; //ratio
 
-        xt = ( ( ( 1 - t ) * xStart + t * xEnd ) )
-        yt = ( ( ( 1 - t ) * yStart + t * yEnd ) )
+          xt = ( ( ( 1 - t ) * xStart + t * xEnd ) )
+          yt = ( ( ( 1 - t ) * yStart + t * yEnd ) )
 
-        xtt = ( ( ( 1 - t ) * xEnd + t * xStart ) )
-        ytt = ( ( ( 1 - t ) * yEnd + t * yStart ) )
+        // second point
+          var dtt = diamEnd/2 + 10; //new distance
+          var tt  = dtt/d; //ratio
+
+          xtt = ( ( ( 1 - tt ) * xEnd + tt * xStart ) )
+          ytt = ( ( ( 1 - tt ) * yEnd + tt * yStart ) )
 
         canvas2D.beginPath();
         canvas2D.moveTo(xt,yt);
@@ -190,7 +197,7 @@
 
       setTimeout(function() {
         draw_connections();
-        // animate();
+        animate();
       }, 2000);
 
       $(window).resize(function(){
