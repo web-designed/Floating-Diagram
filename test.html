@@ -126,16 +126,6 @@
               };
     })();
 
-    window.cancelRequestAnimFrame = ( function() {
-        return window.cancelAnimationFrame          ||
-            window.webkitCancelRequestAnimationFrame    ||
-            window.mozCancelRequestAnimationFrame       ||
-            window.oCancelRequestAnimationFrame     ||
-            window.msCancelRequestAnimationFrame        ||
-            clearTimeout
-    } )();
-
-
     function draw_connections(){
 
       // clear canvas
@@ -179,16 +169,6 @@
     }
 
   /**************************************************************/
-  // on hover
-  /**************************************************************/
-
-    circles.on('mouseenter', function(){
-      
-      console.log('hover');
-
-    })
-
-  /**************************************************************/
   // fire functions
   /**************************************************************/
 
@@ -199,25 +179,6 @@
         draw_connections();
         animate();
       }, 2000);
-
-      $(window).resize(function(){
-
-        // http://editor.javascriptkit.com/?eg=requestanimationframe-demo
-
-        console.log('resized');
-
-        cancelRequestAnimFrame(function() {
-          draw_connections();
-        })
-
-        canvas2D.clearRect(0, 0, canvas.width, canvas.height);
-
-        // setTimeout(function() {
-        //   init_vars();
-        //   circles_init_position();
-        //   draw_connections();
-        // }, 2000);
-      });
 
 
 </script>
