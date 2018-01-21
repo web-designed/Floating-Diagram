@@ -3,195 +3,7 @@
 <head>
   <title>SVG Lines</title>
   <script src="jquery.js"></script>
-
-    <style type="text/css">
-
-      body {
-        margin:0;
-        padding: 0;
-      }
-
-      #methodik_container {
-        width: 100vw;
-        height: 100vh;
-        position: absolute;
-        top:0;
-        left:0;
-      }
-
-      .circle {
-        height:13vh;
-        width:13vh;
-        position: absolute;
-        transition: all 2s;
-        top:50vh;
-        left:50vh;
-      }
-
-      .circle .inner {
-        content: '';
-        display: block;
-        height:100%;
-        width:100%;
-        background-color: rgba(220, 160, 140, 0.5);
-        border-radius: 50%;
-        position: absolute;
-        top:0;
-        left:0;
-        border: 2px solid red;
-        text-align: center;
-        transition: all, 0.5s;
-        /*transform-origin:200% center;*/
-      }
-
-      .circle:hover {
-        width: 15vh;
-        height: 15vh;
-      }
-
-      .animation1 {
-        /* Some layout code… */
-        animation: animation1_XAxis 1.5s infinite reverse ease-in;
-      }
-
-      .animation1 .inner {
-        /* Render dot */
-        animation: animation1_YAxis 1s infinite ease-out;
-      }
-
-      @keyframes animation1_XAxis {
-        50% {
-          animation-timing-function: ease-in;
-          transform: translateX(7px);
-        }
-      }
-
-      @keyframes animation1_YAxis {
-        50% {
-          animation-timing-function: ease-out;
-          transform: translateY(-4px);
-        }
-      }
-
-      .animation2 {
-        /* Some layout code… */
-        animation: animation2_XAxis 1.2s infinite reverse ease-in;
-      }
-
-      .animation2 .inner {
-        /* Render dot */
-        animation: animation2_YAxis 0.9s infinite ease-out;
-      }
-
-      @keyframes animation2_XAxis {
-        50% {
-          animation-timing-function: ease-in;
-          transform: translateX(6px);
-        }
-      }
-
-      @keyframes animation2_YAxis {
-        50% {
-          animation-timing-function: ease-out;
-          transform: translateY(4px);
-        }
-      }
-
-      .animation3 {
-        /* Some layout code… */
-        animation: animation3_XAxis 1.6s infinite reverse ease-in;
-      }
-
-      .animation3 .inner {
-        /* Render dot */
-        animation: animation3_YAxis 0.8s infinite ease-out;
-      }
-
-      @keyframes animation3_XAxis {
-        50% {
-          animation-timing-function: ease-in;
-          transform: translateX(9px);
-        }
-      }
-
-      @keyframes animation3_YAxis {
-        50% {
-          animation-timing-function: ease-out;
-          transform: translateY(8px);
-        }
-      }
-
-      .animation4 {
-        /* Some layout code… */
-        animation: animation4_XAxis 0.9s infinite reverse ease-in;
-      }
-
-      .animation4 .inner {
-        /* Render dot */
-        animation: animation4_YAxis 1.8s infinite ease-out;
-      }
-
-      @keyframes animation4_XAxis {
-        50% {
-          animation-timing-function: ease-in;
-          transform: translateX(11px);
-        }
-      }
-
-      @keyframes animation4_YAxis {
-        50% {
-          animation-timing-function: ease-out;
-          transform: translateY(18px);
-        }
-      }
-
-      
-
-      /*.animate {
-        animation: move 10s infinite linear;
-      }
-
-      .animateInCircle-1 {
-        animation: orbit 3s infinite linear;
-      }
-
-      .animateInCircle-2 {
-        animation: orbittwo 5s infinite linear;
-      }
-
-      @keyframes move {
-        from { transform : translate(0, 0) }
-        to { transform : translate(100px, 100px) }
-      }
-
-      @keyframes orbit {
-        100% { transform:rotate(-360deg); }
-      }
-
-
-      @keyframes orbittwo {
-        from {
-          transform:  
-            rotate(20deg)
-            /* half circle size + .5px(for precision) */
-            translate(-20.5px)
-            /* how much the icon should rotate as it goes around */
-            rotate(-40deg);
-        }
-
-        to {
-          transform:
-            /* full circle rotation: 360 + 20 offset */
-            rotate(380deg)
-            /* half circle size + .5px(for precision) */
-            translate(-20.5px)
-            /* how much the icon should rotate as it goes around */
-            rotate(-40deg);
-        }
-      }*/
-
-
-    </style>
+  <link rel="stylesheet" type="text/css" href="methodik.css">
 
 </head>
 <body>
@@ -237,12 +49,6 @@
 
     init_vars();
 
-    // circles.css({
-    //   'top': 50 + 'vh',
-    //   'left': 50 + 'vw'
-    // })
-
-
 
   /**************************************************************/
   // functions
@@ -261,8 +67,6 @@
         _this.css({
           'top': y + 'vh',
           'left': x + 'vw',
-          'margin-left': -delta + 'px',
-          'margin-top': -delta + 'px'
         });
 
       });  
@@ -273,26 +77,22 @@
       canvas.height = viewportHeight; 
     }
 
-    // TO DO !!!!
-    // make the circle width dynamic for every circle as a avariable in the connect function ;)
-    //..........................................................
 
-
-    function connect(selectorStart, selectorEnd){
+    function connect(selectorStart, selectorEnd, diameter){
 
       var positionStart = $(selectorStart).offset();
-      var xStart = positionStart.left + circleWidth/2;
-      var yStart = positionStart.top + circleWidth/2;
+      var xStart = positionStart.left + diameter/2;
+      var yStart = positionStart.top + diameter/2;
       var positionEnd = $(selectorEnd).offset();
-      var xEnd = positionEnd.left + circleWidth/2;
-      var yEnd = positionEnd.top + circleWidth/2;
+      var xEnd = positionEnd.left + diameter/2;
+      var yEnd = positionEnd.top + diameter/2;
 
       // ---------------------------------------------------------
       //  If distance from circle needed 
       //  https://math.stackexchange.com/questions/175896/finding-a-point-along-a-line-a-certain-distance-away-from-another-point
       // ---------------------------------------------------------
         
-        var Dt = circleWidth/2 + 10; //new distance
+        var Dt = diameter/2 + 10; //new distance
         var D  = Math.sqrt( (xEnd - xStart) * (xEnd - xStart) + (yEnd - yStart) * (yEnd - yStart) ); //distance btw. original points
         var t  = Dt/D; //ratio
 
@@ -336,15 +136,18 @@
 
       //draw
       circles.find('.inner').each(function(){
-        var _this = $(this);
-        var thisId = '#' + _this.attr('id');
-        var goTo = _this.attr('data-connect-to');
+        
+        var _this     = $(this);
+        var thisId    = '#' + _this.attr('id');
+        var goTo      = _this.attr('data-connect-to');
+        var _diameter = _this.outerWidth();
+
         if (goTo) {
           var goTo = goTo.split(',');
           var goToLength = goTo.length;
 
           for (var i = 0; i < goToLength; i++) {
-            connect( thisId , goTo[i]);
+            connect( thisId , goTo[i], _diameter);
           }  
         }
       })
@@ -373,9 +176,9 @@
   /**************************************************************/
 
     circles.on('mouseenter', function(){
-      setTimeout(function() {
-        init_vars();
-      }, 2000);
+      
+      console.log('hover');
+
     })
 
   /**************************************************************/
@@ -387,7 +190,7 @@
 
       setTimeout(function() {
         draw_connections();
-        animate();
+        // animate();
       }, 2000);
 
       $(window).resize(function(){

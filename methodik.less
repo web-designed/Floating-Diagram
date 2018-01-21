@@ -1,0 +1,150 @@
+
+  /**************************************************************/
+  // VARS
+  /**************************************************************/
+
+    @diam       :13vh;
+    @diamHover  :15vh;
+
+      body {
+        margin:0;
+        padding: 0;
+      }
+
+      #methodik_container {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top:0;
+        left:0;
+      }
+
+      .circle {
+        height:@diam;
+        width:@diam;
+        position: absolute;
+        transition: all 2s;
+        top:50vh;
+        left:50vh;
+        margin-left: -@diam/2;
+        margin-top: -@diam/2;
+      }
+
+      .circle .inner {
+        content: '';
+        display: block;
+        height:100%;
+        width:100%;
+        background-color: rgba(220, 160, 140, 0.5);
+        border-radius: 50%;
+        position: absolute;
+        top:0;
+        left:0;
+        border: 2px solid red;
+        text-align: center;
+        transition: all, 0.5s;
+        /*transform-origin:200% center;*/
+      }
+
+      .circle:hover {
+        width: @diamHover;
+        height: @diamHover;
+        margin-left: -@diamHover/2;
+        margin-top: -@diamHover/2;
+      }
+
+      .animation1 {
+        /* Some layout code… */
+        animation: animation1_XAxis 1.5s infinite reverse ease-in;
+      }
+
+      .animation1 .inner {
+        /* Render dot */
+        animation: animation1_YAxis 1s infinite ease-out;
+      }
+
+      @keyframes animation1_XAxis {
+        50% {
+          animation-timing-function: ease-in;
+          transform: translateX(7px);
+        }
+      }
+
+      @keyframes animation1_YAxis {
+        50% {
+          animation-timing-function: ease-out;
+          transform: translateY(-4px);
+        }
+      }
+
+      .animation2 {
+        /* Some layout code… */
+        animation: animation2_XAxis 1.2s infinite reverse ease-in;
+      }
+
+      .animation2 .inner {
+        /* Render dot */
+        animation: animation2_YAxis 0.9s infinite ease-out;
+      }
+
+      @keyframes animation2_XAxis {
+        50% {
+          animation-timing-function: ease-in;
+          transform: translateX(6px);
+        }
+      }
+
+      @keyframes animation2_YAxis {
+        50% {
+          animation-timing-function: ease-out;
+          transform: translateY(4px);
+        }
+      }
+
+      .animation3 {
+        /* Some layout code… */
+        animation: animation3_XAxis 1.6s infinite reverse ease-in;
+      }
+
+      .animation3 .inner {
+        /* Render dot */
+        animation: animation3_YAxis 0.8s infinite ease-out;
+      }
+
+      @keyframes animation3_XAxis {
+        50% {
+          animation-timing-function: ease-in;
+          transform: translateX(9px);
+        }
+      }
+
+      @keyframes animation3_YAxis {
+        50% {
+          animation-timing-function: ease-out;
+          transform: translateY(8px);
+        }
+      }
+
+      .animation4 {
+        /* Some layout code… */
+        animation: animation4_XAxis 0.9s infinite reverse ease-in;
+      }
+
+      .animation4 .inner {
+        /* Render dot */
+        animation: animation4_YAxis 1.8s infinite ease-out;
+      }
+
+      @keyframes animation4_XAxis {
+        50% {
+          animation-timing-function: ease-in;
+          transform: translateX(11px);
+        }
+      }
+
+      @keyframes animation4_YAxis {
+        50% {
+          animation-timing-function: ease-out;
+          transform: translateY(18px);
+        }
+      }
