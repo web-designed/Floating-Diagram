@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SVG Lines</title>
+  <script src="jquery.js"></script>
+
+    <style type="text/css">
+
+      body {
+        margin:0;
+        padding: 0;
+      }
+
+      #methodik_container {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top:0;
+        left:0;
+      }
+
+      .circle {
+        height:13vh;
+        width:13vh;
+        position: absolute;
+        transition: all 2s;
+        top:50vh;
+        left:50vh;
+      }
+
+      .circle .inner {
+        content: '';
+        display: block;
+        height:100%;
+        width:100%;
+        background-color: rgba(220, 160, 140, 0.5);
+        border-radius: 50%;
+        position: absolute;
+        top:0;
+        left:0;
+        border: 2px solid red;
+        text-align: center;
+        transition: all, 0.5s;
+        /*transform-origin:200% center;*/
+      }
+
+      .circle:hover {
+        width: 15vh;
+        height: 15vh;
+      }
+
+      .animation1 {
+        /* Some layout code… */
+        animation: animation1_XAxis 1.5s infinite reverse ease-in;
+      }
+
+      .animation1 .inner {
+        /* Render dot */
+        animation: animation1_YAxis 1s infinite ease-out;
+      }
+
+      @keyframes animation1_XAxis {
+        50% {
+          animation-timing-function: ease-in;
+          transform: translateX(7px);
+        }
+      }
+
+      @keyframes animation1_YAxis {
+        50% {
+          animation-timing-function: ease-out;
+          transform: translateY(-4px);
+        }
+      }
+
+      .animation2 {
+        /* Some layout code… */
+        animation: animation2_XAxis 1.2s infinite reverse ease-in;
+      }
+
+      .animation2 .inner {
+        /* Render dot */
+        animation: animation2_YAxis 0.9s infinite ease-out;
+      }
+
+      @keyframes animation2_XAxis {
+        50% {
+          animation-timing-function: ease-in;
+          transform: translateX(6px);
+        }
+      }
+
+      @keyframes animation2_YAxis {
+        50% {
+          animation-timing-function: ease-out;
+          transform: translateY(4px);
+        }
+      }
+
+      .animation3 {
+        /* Some layout code… */
+        animation: animation3_XAxis 1.6s infinite reverse ease-in;
+      }
+
+      .animation3 .inner {
+        /* Render dot */
+        animation: animation3_YAxis 0.8s infinite ease-out;
+      }
+
+      @keyframes animation3_XAxis {
+        50% {
+          animation-timing-function: ease-in;
+          transform: translateX(9px);
+        }
+      }
+
+      @keyframes animation3_YAxis {
+        50% {
+          animation-timing-function: ease-out;
+          transform: translateY(8px);
+        }
+      }
+
+      .animation4 {
+        /* Some layout code… */
+        animation: animation4_XAxis 0.9s infinite reverse ease-in;
+      }
+
+      .animation4 .inner {
+        /* Render dot */
+        animation: animation4_YAxis 1.8s infinite ease-out;
+      }
+
+      @keyframes animation4_XAxis {
+        50% {
+          animation-timing-function: ease-in;
+          transform: translateX(11px);
+        }
+      }
+
+      @keyframes animation4_YAxis {
+        50% {
+          animation-timing-function: ease-out;
+          transform: translateY(18px);
+        }
+      }
+
+      
+
+      /*.animate {
+        animation: move 10s infinite linear;
+      }
+
+      .animateInCircle-1 {
+        animation: orbit 3s infinite linear;
+      }
+
+      .animateInCircle-2 {
+        animation: orbittwo 5s infinite linear;
+      }
+
+      @keyframes move {
+        from { transform : translate(0, 0) }
+        to { transform : translate(100px, 100px) }
+      }
+
+      @keyframes orbit {
+        100% { transform:rotate(-360deg); }
+      }
+
+
+      @keyframes orbittwo {
+        from {
+          transform:  
+            rotate(20deg)
+            /* half circle size + .5px(for precision) */
+            translate(-20.5px)
+            /* how much the icon should rotate as it goes around */
+            rotate(-40deg);
+        }
+
+        to {
+          transform:
+            /* full circle rotation: 360 + 20 offset */
+            rotate(380deg)
+            /* half circle size + .5px(for precision) */
+            translate(-20.5px)
+            /* how much the icon should rotate as it goes around */
+            rotate(-40deg);
+        }
+      }*/
+
+
+    </style>
+
+</head>
+<body>
+  <canvas id="canvas" width="100%" height="100%"></canvas>
+  <div id="methodik_container">
+    <div class="circle" data-init-x="50" data-init-y="80">
+      <div id="inner-0" class="inner" data-connect-to="#inner-1, #inner-2, #inner-3, #inner-4">Design Thinking</div>
+    </div>
+    <div class="circle" data-init-x="15" data-init-y="50">
+      <div id="inner-1" class="inner" data-connect-to="#inner-2">Value Proposition Engineering</div>
+    </div>
+    <div class="circle" data-init-x="30" data-init-y="20">
+      <div id="inner-2" class="inner" data-connect-to="#inner-3">Neuro Marketing</div>
+    </div>
+    <div class="circle" data-init-x="70" data-init-y="20">
+      <div id="inner-3" class="inner" data-connect-to="#inner-4">Business Model Generation</div>
+    </div>
+    <div class="circle" data-init-x="85" data-init-y="50">
+      <div id="inner-4" class="inner">Trend Scouting</div>
+    </div>
+    <button onClick="cancelAnim();" style="position:absolute; z-index: 2">Cancel</button>
+  </div>
+</body>
+
+<script>
+
+  $ = jQuery;
+
+  /**************************************************************/
+  // setup
+  /**************************************************************/
+
+    var animations = ['animation1', 'animation2', 'animation3', 'animation4'],
+        circles = $('.circle'),
+        canvas  = document.getElementById("canvas"),
+        canvas2D  = canvas.getContext("2d")
+  
+    function init_vars(){
+      viewportWidth = $(window).innerWidth();
+      viewportHeight = $(window).innerHeight();
+      circleWidth  = $('.circle').outerWidth();
+    }
+
+    init_vars();
+
+    // circles.css({
+    //   'top': 50 + 'vh',
+    //   'left': 50 + 'vw'
+    // })
+
+
+
+  /**************************************************************/
+  // functions
+  /**************************************************************/
+
+    function circles_init_position(){
+
+      circles.each(function(){
+
+        var _this = $(this);
+
+        var x       = parseFloat(_this.attr('data-init-x'));
+        var y       = parseFloat(_this.attr('data-init-y'));
+        var delta   = circleWidth/2;
+
+        _this.css({
+          'top': y + 'vh',
+          'left': x + 'vw',
+          'margin-left': -delta + 'px',
+          'margin-top': -delta + 'px'
+        });
+
+      });  
+    }
+
+    function canvas_init(){
+      canvas.width = viewportWidth;
+      canvas.height = viewportHeight; 
+    }
+
+    // TO DO !!!!
+    // make the circle width dynamic for every circle as a avariable in the connect function ;)
+    //..........................................................
+
+
+    function connect(selectorStart, selectorEnd){
+
+      var positionStart = $(selectorStart).offset();
+      var xStart = positionStart.left + circleWidth/2;
+      var yStart = positionStart.top + circleWidth/2;
+      var positionEnd = $(selectorEnd).offset();
+      var xEnd = positionEnd.left + circleWidth/2;
+      var yEnd = positionEnd.top + circleWidth/2;
+
+      // ---------------------------------------------------------
+      //  If distance from circle needed 
+      //  https://math.stackexchange.com/questions/175896/finding-a-point-along-a-line-a-certain-distance-away-from-another-point
+      // ---------------------------------------------------------
+        
+        var Dt = circleWidth/2 + 10; //new distance
+        var D  = Math.sqrt( (xEnd - xStart) * (xEnd - xStart) + (yEnd - yStart) * (yEnd - yStart) ); //distance btw. original points
+        var t  = Dt/D; //ratio
+
+        xt = ( ( ( 1 - t ) * xStart + t * xEnd ) )
+        yt = ( ( ( 1 - t ) * yStart + t * yEnd ) )
+
+        xtt = ( ( ( 1 - t ) * xEnd + t * xStart ) )
+        ytt = ( ( ( 1 - t ) * yEnd + t * yStart ) )
+
+        canvas2D.beginPath();
+        canvas2D.moveTo(xt,yt);
+        canvas2D.lineTo(xtt,ytt);
+        canvas2D.stroke();
+    }
+
+    window.requestAnimFrame = (function(callback) {
+      return  window.requestAnimationFrame || 
+              window.webkitRequestAnimationFrame || 
+              window.mozRequestAnimationFrame || 
+              window.oRequestAnimationFrame || 
+              window.msRequestAnimationFrame ||
+              function(callback) {
+                window.setTimeout(callback, 1000 / 60);
+              };
+    })();
+
+    window.cancelRequestAnimFrame = ( function() {
+        return window.cancelAnimationFrame          ||
+            window.webkitCancelRequestAnimationFrame    ||
+            window.mozCancelRequestAnimationFrame       ||
+            window.oCancelRequestAnimationFrame     ||
+            window.msCancelRequestAnimationFrame        ||
+            clearTimeout
+    } )();
+
+
+    function draw_connections(){
+
+      // clear canvas
+      canvas2D.clearRect(0, 0, canvas.width, canvas.height);
+
+      //draw
+      circles.find('.inner').each(function(){
+        var _this = $(this);
+        var thisId = '#' + _this.attr('id');
+        var goTo = _this.attr('data-connect-to');
+        if (goTo) {
+          var goTo = goTo.split(',');
+          var goToLength = goTo.length;
+
+          for (var i = 0; i < goToLength; i++) {
+            connect( thisId , goTo[i]);
+          }  
+        }
+      })
+
+      //repeat since the animation is infinite
+      requestAnimFrame(function() {
+        draw_connections();
+      });
+    }
+
+    function animate(){
+      circles.each(function(i){
+        var randomNr = Math.floor( Math.random() * 4 );
+        $(this).addClass(animations[randomNr]);
+      })
+    }
+
+    function cancelAnim() {
+      cancelRequestAnimFrame(function() {
+        draw_connections();
+      })
+    }
+
+  /**************************************************************/
+  // on hover
+  /**************************************************************/
+
+    circles.on('mouseenter', function(){
+      setTimeout(function() {
+        init_vars();
+      }, 2000);
+    })
+
+  /**************************************************************/
+  // fire functions
+  /**************************************************************/
+
+      canvas_init();
+      circles_init_position();  
+
+      setTimeout(function() {
+        draw_connections();
+        animate();
+      }, 2000);
+
+      $(window).resize(function(){
+
+        // http://editor.javascriptkit.com/?eg=requestanimationframe-demo
+
+        console.log('resized');
+
+        cancelRequestAnimFrame(function() {
+          draw_connections();
+        })
+
+        canvas2D.clearRect(0, 0, canvas.width, canvas.height);
+
+        // setTimeout(function() {
+        //   init_vars();
+        //   circles_init_position();
+        //   draw_connections();
+        // }, 2000);
+      });
+
+
+</script>
+
+
+</html>
