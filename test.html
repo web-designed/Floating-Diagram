@@ -8,23 +8,43 @@
 </head>
 <body>
   <canvas id="canvas" width="100%" height="100%"></canvas>
+  <div class="methodik_img_wrapper"></div>
   <div id="methodik_container">
     <div class="circle" data-init-x="50" data-init-y="80">
-      <div id="inner-0" class="inner" data-connect-to="#inner-1, #inner-2, #inner-3, #inner-4">Design Thinking</div>
+      <div id="inner-0" class="inner" data-connect-to="#inner-1, #inner-2, #inner-3, #inner-4">
+        <div class="circle-text-wrapper">
+          Design Thinking
+        </div>
+      </div>
     </div>
     <div class="circle" data-init-x="15" data-init-y="50">
-      <div id="inner-1" class="inner" data-connect-to="#inner-2">Value Proposition Engineering</div>
+      <div id="inner-1" class="inner" data-connect-to="#inner-2">
+        <div class="circle-text-wrapper">
+          Value Proposition Engineering
+        </div>
+      </div>
     </div>
     <div class="circle" data-init-x="30" data-init-y="20">
-      <div id="inner-2" class="inner" data-connect-to="#inner-3">Neuro Marketing</div>
+      <div id="inner-2" class="inner" data-connect-to="#inner-3">
+        <div class="circle-text-wrapper">
+          Neuro Marketing
+        </div>
+      </div>
     </div>
     <div class="circle" data-init-x="70" data-init-y="20">
-      <div id="inner-3" class="inner" data-connect-to="#inner-4">Business Model Generation</div>
+      <div id="inner-3" class="inner" data-connect-to="#inner-4">
+        <div class="circle-text-wrapper">
+          Business Model Generation
+        </div>
+      </div>
     </div>
     <div class="circle" data-init-x="85" data-init-y="50">
-      <div id="inner-4" class="inner">Trend Scouting</div>
+      <div id="inner-4" class="inner">
+        <div class="circle-text-wrapper">
+          Trend Scouting
+        </div>
+      </div>
     </div>
-    <button onClick="cancelAnim();" style="position:absolute; z-index: 2">Cancel</button>
   </div>
 </body>
 
@@ -109,6 +129,8 @@
           xtt = ( ( ( 1 - tt ) * xEnd + tt * xStart ) )
           ytt = ( ( ( 1 - tt ) * yEnd + tt * yStart ) )
 
+        canvas2D.strokeStyle = "rgba(250, 255, 9, 0.2)";
+        canvas2D.lineWidth = 3;
         canvas2D.beginPath();
         canvas2D.moveTo(xt,yt);
         canvas2D.lineTo(xtt,ytt);

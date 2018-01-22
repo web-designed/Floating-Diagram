@@ -4,11 +4,24 @@
   /**************************************************************/
 
     @diam       :13vh;
-    @diamHover  :15vh;
+    @diamHover  :16vh;
+    @rayRatio   :150%;
+    @cta        :rgb(250, 255, 9);
 
       body {
         margin:0;
         padding: 0;
+      }
+
+      .methodik_img_wrapper {
+        background-image: url(img/kakoii_web_arbeiten.jpg);
+        background-size:cover;
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top:0;
+        left:0;
+        z-index: -1;
       }
 
       #methodik_container {
@@ -25,7 +38,7 @@
         position: absolute;
         transition: all 2s;
         top:50vh;
-        left:50vh;
+        left:50vw;
         margin-left: -@diam/2;
         margin-top: -@diam/2;
       }
@@ -35,15 +48,56 @@
         display: block;
         height:100%;
         width:100%;
-        background-color: rgba(220, 160, 140, 0.5);
         border-radius: 50%;
         position: absolute;
         top:0;
         left:0;
-        border: 2px solid red;
+        border: 2px solid @cta;
         text-align: center;
         transition: all, 0.5s;
         /*transform-origin:200% center;*/
+        display:flex;
+        flex-direction: column;
+        align-items:center;
+        justify-content: center;
+
+        .circle-text-wrapper {
+          width: @diam;
+        }
+
+        &:after {
+            content:'';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top:50%;
+            left:50%;
+            display: block;
+            transition: all, .5s;
+            border-radius: 50%;
+            background-color: @cta;
+            opacity: .3;
+            margin-left: -50%;
+            margin-top: -50%;
+            z-index: -1;
+        }
+
+        &:before {
+            content:'';
+            width: 4px;
+            height: 4px;
+            position: absolute;
+            top:50%;
+            left:50%;
+            display: block;
+            border-radius: 50%;
+            border: 1px solid @cta;
+            box-sizing: border-box;
+            z-index: -1;
+            opacity: 0;
+            margin-left: -2px;
+            margin-top: -2px;
+        }
       }
 
       .circle:hover {
@@ -51,7 +105,45 @@
         height: @diamHover;
         margin-left: -@diamHover/2;
         margin-top: -@diamHover/2;
+
+        .inner {
+
+          border-width: 4px;
+
+          &:after {
+            width: @rayRatio;
+            height: @rayRatio;
+            margin-left: -@rayRatio/2;
+            margin-top: -@rayRatio/2;
+          }
+
+          &:before {
+            animation: ray .5s linear;
+            animation-fill-mode: forwards;
+          }
+        }
       }
+
+      @keyframes ray {
+        0% {
+          opacity: 0;
+        }
+
+        50% {
+          transform: scale(20);
+          opacity: 0.3;
+        }
+
+        100% {
+          transform: scale(50);
+          opacity: 0;
+        }
+      }
+
+
+      /**************************************************************/
+      // Floating animations
+      /**************************************************************/
 
       .animation1 {
         /* Some layout code… */
