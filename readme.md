@@ -2,7 +2,7 @@
 
 This is a simple integration of canvas based lines into a HTML CSS based diagram. 
 
-Add your own animation, feel free to change the amount of circles and their posision and the canvas produced lines will stay nice and floating.
+Add your own animation, feel free to change the amount of circles and their position and the canvas produced lines will stay nice and floating.
 
 ## DEMO
 
