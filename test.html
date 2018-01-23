@@ -1,209 +1,51 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>SVG Lines</title>
-  <script src="jquery.js"></script>
-  <link rel="stylesheet" type="text/css" href="methodik.css">
+  <head>
+    <title>Floating Diagram</title>
+    <link rel="stylesheet" type="text/css" href="styles/floating.css">
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+  </head>
 
-</head>
-<body>
-  <canvas id="canvas" width="100%" height="100%"></canvas>
-  <div class="methodik_img_wrapper"></div>
-  <div id="methodik_container">
-    <div class="circle" data-init-x="50" data-init-y="80">
-      <div id="inner-0" class="inner" data-connect-to="#inner-1, #inner-2, #inner-3, #inner-4">
-        <div class="circle-text-wrapper">
-          Design Thinking
+  <body>
+    <canvas id="canvas" width="100%" height="100%"></canvas>
+    <div class="background-wrapper"></div>
+    <div id="floating-diagram-wrapper">
+      <div class="floating-circle" data-init-x="50" data-init-y="50">
+        <div id="inner-0" class="inner" data-connect-to="#inner-1, #inner-2, #inner-3, #inner-4, #inner-5, #inner-6">
+          <div class="floating-circle-text-wrapper">Javascript</div>
+        </div>
+      </div>
+      <div class="floating-circle" data-init-x="15" data-init-y="50">
+        <div id="inner-1" class="inner" data-connect-to="#inner-2, #inner-5">
+          <div class="floating-circle-text-wrapper">React JS</div>
+        </div>
+      </div>
+      <div class="floating-circle" data-init-x="30" data-init-y="20">
+        <div id="inner-2" class="inner" data-connect-to="#inner-3">
+          <div class="floating-circle-text-wrapper">Angular</div>
+        </div>
+      </div>
+      <div class="floating-circle" data-init-x="70" data-init-y="20">
+        <div id="inner-3" class="inner" data-connect-to="#inner-4">
+          <div class="floating-circle-text-wrapper">Node.js</div>
+        </div>
+      </div>
+      <div class="floating-circle" data-init-x="85" data-init-y="50">
+        <div id="inner-4" class="inner">
+          <div class="floating-circle-text-wrapper">Vue.js</div>
+        </div>
+      </div>
+      <div class="floating-circle" data-init-x="30" data-init-y="80">
+        <div id="inner-5" class="inner" data-connect-to="#inner-6">
+          <div class="floating-circle-text-wrapper">Ember</div>
+        </div>
+      </div>
+      <div class="floating-circle" data-init-x="70" data-init-y="80">
+        <div id="inner-6" class="inner" data-connect-to="#inner-4">
+          <div class="floating-circle-text-wrapper">Meteor</div>
         </div>
       </div>
     </div>
-    <div class="circle" data-init-x="15" data-init-y="50">
-      <div id="inner-1" class="inner" data-connect-to="#inner-2">
-        <div class="circle-text-wrapper">
-          Value Proposition Engineering
-        </div>
-      </div>
-    </div>
-    <div class="circle" data-init-x="30" data-init-y="20">
-      <div id="inner-2" class="inner" data-connect-to="#inner-3">
-        <div class="circle-text-wrapper">
-          Neuro Marketing
-        </div>
-      </div>
-    </div>
-    <div class="circle" data-init-x="70" data-init-y="20">
-      <div id="inner-3" class="inner" data-connect-to="#inner-4">
-        <div class="circle-text-wrapper">
-          Business Model Generation
-        </div>
-      </div>
-    </div>
-    <div class="circle" data-init-x="85" data-init-y="50">
-      <div id="inner-4" class="inner">
-        <div class="circle-text-wrapper">
-          Trend Scouting
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
-
-<script>
-
-  $ = jQuery;
-
-  /**************************************************************/
-  // setup
-  /**************************************************************/
-
-    var animations = ['animation1', 'animation2', 'animation3', 'animation4'],
-        circles = $('.circle'),
-        canvas  = document.getElementById("canvas"),
-        canvas2D  = canvas.getContext("2d")
-  
-    function init_vars(){
-      viewportWidth = $(window).innerWidth();
-      viewportHeight = $(window).innerHeight();
-      circleWidth  = $('.circle').outerWidth();
-    }
-
-    init_vars();
-
-
-  /**************************************************************/
-  // functions
-  /**************************************************************/
-
-    function circles_init_position(){
-
-      circles.each(function(){
-
-        var _this = $(this);
-
-        var x       = parseFloat(_this.attr('data-init-x'));
-        var y       = parseFloat(_this.attr('data-init-y'));
-        var delta   = circleWidth/2;
-
-        _this.css({
-          'top': y + 'vh',
-          'left': x + 'vw',
-        });
-
-      });  
-    }
-
-    function canvas_init(){
-      canvas.width = viewportWidth;
-      canvas.height = viewportHeight; 
-    }
-
-
-    function connect(selectorStart, selectorEnd){
-
-      var diamStart = $(selectorStart).outerWidth();
-      var diamEnd = $(selectorEnd).outerWidth();
-      var positionStart = $(selectorStart).offset();
-      var xStart = positionStart.left + diamStart/2;
-      var yStart = positionStart.top + diamStart/2;
-      var positionEnd = $(selectorEnd).offset();
-      var xEnd = positionEnd.left + diamEnd/2;
-      var yEnd = positionEnd.top + diamEnd/2;
-
-      // ---------------------------------------------------------
-      //  If distance from circle needed 
-      //  https://math.stackexchange.com/questions/175896/finding-a-point-along-a-line-a-certain-distance-away-from-another-point
-      // ---------------------------------------------------------
-        
-        // First Point
-          var dt = diamStart/2 + 10; //new distance
-          var d  = Math.sqrt( (xEnd - xStart) * (xEnd - xStart) + (yEnd - yStart) * (yEnd - yStart) ); //distance btw. original points
-          var t  = dt/d; //ratio
-
-          xt = ( ( ( 1 - t ) * xStart + t * xEnd ) )
-          yt = ( ( ( 1 - t ) * yStart + t * yEnd ) )
-
-        // second point
-          var dtt = diamEnd/2 + 10; //new distance
-          var tt  = dtt/d; //ratio
-
-          xtt = ( ( ( 1 - tt ) * xEnd + tt * xStart ) )
-          ytt = ( ( ( 1 - tt ) * yEnd + tt * yStart ) )
-
-        canvas2D.strokeStyle = "rgba(250, 255, 9, 0.2)";
-        canvas2D.lineWidth = 3;
-        canvas2D.beginPath();
-        canvas2D.moveTo(xt,yt);
-        canvas2D.lineTo(xtt,ytt);
-        canvas2D.stroke();
-    }
-
-    window.requestAnimFrame = (function(callback) {
-      return  window.requestAnimationFrame || 
-              window.webkitRequestAnimationFrame || 
-              window.mozRequestAnimationFrame || 
-              window.oRequestAnimationFrame || 
-              window.msRequestAnimationFrame ||
-              function(callback) {
-                window.setTimeout(callback, 1000 / 60);
-              };
-    })();
-
-    function draw_connections(){
-
-      // clear canvas
-      canvas2D.clearRect(0, 0, canvas.width, canvas.height);
-
-      //draw
-      circles.find('.inner').each(function(){
-        
-        var _this     = $(this);
-        var thisId    = '#' + _this.attr('id');
-        var goTo      = _this.attr('data-connect-to');
-        var _diameter = _this.outerWidth();
-
-        if (goTo) {
-          var goTo = goTo.split(',');
-          var goToLength = goTo.length;
-
-          for (var i = 0; i < goToLength; i++) {
-            connect( thisId , goTo[i], _diameter);
-          }  
-        }
-      })
-
-      //repeat since the animation is infinite
-      requestAnimFrame(function() {
-        draw_connections();
-      });
-    }
-
-    function animate(){
-      circles.each(function(i){
-        var randomNr = Math.floor( Math.random() * 4 );
-        $(this).addClass(animations[randomNr]);
-      })
-    }
-
-    function cancelAnim() {
-      cancelRequestAnimFrame(function() {
-        draw_connections();
-      })
-    }
-
-  /**************************************************************/
-  // fire functions
-  /**************************************************************/
-
-      canvas_init();
-      circles_init_position();  
-
-      setTimeout(function() {
-        draw_connections();
-        animate();
-      }, 2000);
-
-
-</script>
-
-
+    <script type="text/javascript" src="js/floating.js"></script>
+  </body>
 </html>

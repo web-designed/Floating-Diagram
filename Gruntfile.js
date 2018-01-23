@@ -10,13 +10,13 @@ module.exports = function(grunt) {
           optimization: 2
         },
         files: {
-          "methodik.css": "methodik.less" // destination file and source file
+          "./styles/floating.css": "./styles/floating.less" // destination file and source file
         }
       }
     },
     watch: {
       styles: {
-        files: ['methodik.less'], // which files to watch
+        files: ['./styles/floating.less'], // which files to watch
         tasks: ['less'],
         options: {
           nospawn: true
