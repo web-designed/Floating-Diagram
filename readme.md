@@ -6,7 +6,7 @@ Add your own animation, feel free to change the amount of circles and their posi
 
 ## DEMO
 
-[Checkout the demo] (https://web-designed.github.io/Floating-Diagram/test.html)
+Checkout the demo -> (https://web-designed.github.io/Floating-Diagram/test.html)
 
 ## Add your markup like this:
 
